@@ -22,7 +22,7 @@
                 <input autocomplete="off" type="number" min="1" name="form[]" v-model="count" class=" quantity__input req" />
                 <div class="quantity__btn up" @click="addCountProduct" >+</div>
             </div>
-            <button class="cart-item__trash" @click="EventRemoveProduct()">
+            <button class="cart-item__trash" @click="removeProduct()">
                 <svg>
                     <use xlink:href="#trash"></use>
                 </svg>
@@ -47,28 +47,32 @@ export default {
         name: String,
         img: String,
         price: Number,
-        sale: Boolean
+        sale: Boolean,
+        sum: Number
     },
     mounted(){
         this.sum = this.count * this.price;
-        console.log(this.sum)
+    },
+    beforeUpdate(){
+        this.sum = this.count * this.price;
     },
     methods: {
         addCountProduct(){
-            this.$emit('add', this.productid); 
+            this.$emit('add', this.productid)
+            this.UpdatePriceTovar()
             // localStorage.setItem('cart', JSON.stringify(state.cart))
             // state.cart = JSON.parse(localStorage.getItem('cart'))
         },
         removeCountProduct(){
-            this.$emit('minus', this.productid); 
+            this.$emit('minus', this.productid)
+            this.UpdatePriceTovar()
         },
 
-        EventRemoveProduct(){
+        removeProduct(){
            this.$emit('remove', this.productid); 
         },
         UpdatePriceTovar(){
            this.sum = this.count * this.price;
-           this.$emit('update');
         },
     }
 }

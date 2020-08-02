@@ -24,7 +24,7 @@
               :img="item.img"
               :count="item.count"
               :price="item.price"
-              :sale="false"
+              :sale="item.sale"
             />
 
         </div>
@@ -68,11 +68,20 @@ export default {
   created() {
     this.UpdatePrice()
   },
+  beforeCreate(){
+    console.log(this.cart.products.length)
+    if(this.cart.products.length === 0){
+      this.$emit('zero')
+    }
+  },
   methods:{
     removeProductOnCart(id){
-        delete localStorage.cart.products[id]
-        cart = localStorage.cart;
-        // this.$store.commit('removeProductOnCart', this.productid)
+      for(var i=0; i<= this.cart.products.length; i++){
+        if(this.cart.products[i].productid == id){
+          this.cart.products.splice(i, 1)
+        }
+      }
+      this.UpdatePrice()
     },
     addCountProduct(id){
       for(var i=0; i<= this.cart.products.length; i++){
@@ -92,7 +101,6 @@ export default {
       }
     },
     UpdatePrice(){
-      console.log("UpdatePrice");
       this.ProductSum = 0
       for(var i=0; i<= this.cart.products.length; i++){
         this.ProductSum = this.ProductSum + (this.cart.products[i].count * this.cart.products[i].price)
