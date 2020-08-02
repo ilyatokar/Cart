@@ -1,7 +1,7 @@
 <template>
     <div class="container cart-empty">
         <h1>Корзина пустая</h1>
-		<img src="http://192.168.1.196/local/templates/s-telecom/components/bitrix/sale.basket.basket/shop_basket/images/empty_cart.svg" alt="">
+		<img src="http://192.168.1.196/local/templates/s-telecom/components/bitrix/sale.basket.basket/shop_basket/images/empty_cart.svg" alt="Пустая корзина">
 	</div>
 </template>
 <style>

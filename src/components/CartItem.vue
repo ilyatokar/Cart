@@ -22,7 +22,7 @@
                 <input autocomplete="off" type="number" min="1" name="form[]" v-model="count" class=" quantity__input req" />
                 <div class="quantity__btn up" @click="addCountProduct" >+</div>
             </div>
-            <button class="cart-item__trash" @click="removeProductOnCart">
+            <button class="cart-item__trash" @click="EventRemoveProduct()">
                 <svg>
                     <use xlink:href="#trash"></use>
                 </svg>
@@ -51,28 +51,25 @@ export default {
     },
     mounted(){
         this.sum = this.count * this.price;
-    },
-    computed:{
-        getCount(){
-            return 0
-        }
+        console.log(this.sum)
     },
     methods: {
         addCountProduct(){
-            state.cart.products[id].count++
-            localStorage.setItem('cart', JSON.stringify(state.cart))
-            state.cart = JSON.parse(localStorage.getItem('cart'))
+            this.$emit('add', this.productid); 
+            // localStorage.setItem('cart', JSON.stringify(state.cart))
+            // state.cart = JSON.parse(localStorage.getItem('cart'))
         },
         removeCountProduct(){
-            if(state.cart.products[id].count > 0){
-                state.cart.products[id].count--
-                localStorage.setItem('cart', JSON.stringify(state.cart))
-                state.cart = JSON.parse(localStorage.getItem('cart'))
-            }
+            this.$emit('minus', this.productid); 
         },
-        removeProductOnCart(){
-            this.$store.commit('removeProductOnCart', this.productid)
-        }
+
+        EventRemoveProduct(){
+           this.$emit('remove', this.productid); 
+        },
+        UpdatePriceTovar(){
+           this.sum = this.count * this.price;
+           this.$emit('update');
+        },
     }
 }
 </script>

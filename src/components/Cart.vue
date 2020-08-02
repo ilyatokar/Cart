@@ -17,8 +17,26 @@ export default {
 	name: 'Cart',
   	data() {
 		return {
-			cart: "",
-			virtualCart: ""
+			cart: {
+				products:[
+					{
+						count: 10,
+						productid: 391,
+						name: "Название книги",
+						img: "http://5.189.224.234/upload/iblock/32a/32abf0c6d443250631fbd0393b0107c2.jpg",
+						price: 200,
+						sale: false
+					},
+					{
+						count: 10,
+						productid: 392,
+						name: "Название книги 2",
+						img: "http://5.189.224.234/upload/iblock/32a/32abf0c6d443250631fbd0393b0107c2.jpg",
+						price: 400,
+						sale: true
+					}
+				]
+			},
 		}
 	},
   	components: {
@@ -26,16 +44,7 @@ export default {
 		CartEmpty
   	},
 	mounted(){
-		var jsondata = localStorage.getItem('cart')
-		console.log(jsondata)
-		this.$axios
-      	.post('http://192.168.1.196/apiv1/cartitemsinfo', jsondata)
-		.then(response => {
-			this.virtualCart = response.data
-			if(this.virtualCart.products !== ""){
-				this.cart = this.virtualCart
-			}
-		})
+		localStorage.cart = this.cart;
 		
 	},
 	computed:{
